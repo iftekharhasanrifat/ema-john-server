@@ -46,21 +46,21 @@ client.connect(err => {
     app.post('/productsByKeys', (req, res) => {
         const productKeys = req.body;
         productsCollection.find({ key: { $in: productKeys } })
-        .toArray((err,documents)=>{
-            res.send(documents);
-        })
+            .toArray((err, documents) => {
+                res.send(documents);
+            })
     })
-    
+
     app.post('/addOrder', (req, res) => {
         const order = req.body;
         console.log(order);
         ordersCollection.insertOne(order)
             .then(result => {
                 console.log(result.insertedCount);
-                res.send(result.insertedCount>0);
+                res.send(result.insertedCount > 0);
             })
     })
 
 });
 
-app.listen(port)
+app.listen(process.env.PORT || port)
